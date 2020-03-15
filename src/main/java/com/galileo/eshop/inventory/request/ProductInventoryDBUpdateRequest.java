@@ -1,6 +1,8 @@
 package com.galileo.eshop.inventory.request;
 
 import com.galileo.eshop.inventory.model.ProductInventory;
+import com.galileo.eshop.inventory.service.ProductInventoryService;
+import lombok.Data;
 
 /**
  * @author galileo
@@ -11,21 +13,24 @@ import com.galileo.eshop.inventory.model.ProductInventory;
  * @Date 2020/3/15 16:44
  * @Version 1.0
  **/
-public class InventoryCntDBUpdateRequest implements  Request {
+@Data
+public class ProductInventoryDBUpdateRequest implements  Request {
 
     /**
      * 商品库存
      */
     private ProductInventory productInventory;
 
-    public InventoryCntDBUpdateRequest(ProductInventory productInventory) {
-        this.productInventory = productInventory;
-    }
+    /**
+     * 商品库存Service
+     */
+    private ProductInventoryService productInventoryService;
 
     @Override
     public void process() {
         // 删除redis中的缓存
-
+        productInventoryService.removeProductInventoryCache(productInventory);
         // 修改数据库中的库存
+        productInventoryService.updateProductInventory(productInventory);
     }
 }

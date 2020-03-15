@@ -1,6 +1,7 @@
 package com.galileo.eshop.inventory.mapper;
 
 import com.galileo.eshop.inventory.model.ProductInventory;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * @author galileo
@@ -16,4 +17,11 @@ public interface ProductInventoryMapper {
      * @param inventoryCnt 商品库存
      */
     void updateProductInventory(ProductInventory inventoryCnt);
+
+    /**
+     * 根据商品id查询商品库存信息
+     * @param productId 商品id
+     * @return
+     */
+    ProductInventory findProductInventory(@Param("productId") Integer productId);
 }
